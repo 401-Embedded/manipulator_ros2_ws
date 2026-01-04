@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="my_manipulator">
+
+  <!-- base -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://my_manipulator_description/meshes/base_link.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- articulation1 -->
+  <link name="articulation1">
+    <visual>
+      <geometry>
+        <mesh filename="package://my_manipulator_description/meshes/articulation1.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- joint: base -> link1 -->
+  <joint name="joint1" type="revolute">
+    <parent link="base_link"/>
+    <child link="articulation1"/>
+
+    <origin xyz="0 0 0.045" rpy="0 0 0"/>
+
+    <!-- 회전축 -->
+    <axis xyz="0 0 1"/>
+
+    <!-- 임시 limit -->
+    <limit lower="-1.57" upper="1.57" effort="1" velocity="1"/>
+  </joint>
+
+  <!-- link1 -->
+   <link name ="link1">
+    <visual>
+      <geometry>
+        <mesh filename="package://my_manipulator_description/meshes/link1.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- joint: articulation1 -> link1 -->
+  <joint name="joint2" type="revolute">
+    <parent link="articulation1"/>
+    <child link="link1"/>
+
+    <origin xyz="0 0.026 0.03" rpy="0 0 0"/>
+
+    <!-- 회전축 -->
+    <axis xyz="0 1 0"/>
+
+    <!-- 임시 limit -->
+    <limit lower="-1.57" upper="1.57" effort="1" velocity="1"/>
+  </joint>
+
+  <!-- link2 -->
+  <link name ="link2">
+    <visual>
+      <geometry>
+        <mesh filename="package://my_manipulator_description/meshes/link2.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- joint2: link1 -> link2 -->
+  <joint name="joint3" type="revolute">
+    <parent link="link1"/>
+    <child link="link2"/> 
+    <origin xyz="0 -0.046 0.2" rpy="0 0 0"/>
+    <!-- 회전축 -->
+    <axis xyz="0 1 0"/>
+    <!-- 임시 limit -->
+    <limit lower="-1.57" upper="1.57" effort="1" velocity="1"/>
+  </joint>  
+
+  <!-- gripper base -->
+  <link name ="gripper_base">
+    <visual>
+      <geometry>
+        <mesh filename="package://my_manipulator_description/meshes/gripper_base.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- joint3: link2 -> gripper base -->
+  <joint name="joint4" type="revolute">
+    <parent link="link2"/>
+    <child link="gripper_base"/> 
+    <origin xyz="0 0.021 0.199" rpy="0 0 0"/>
+    <!-- 회전축 -->
+    <axis xyz="0 0 1"/>
+    <!-- 임시 limit -->
+    <limit lower="-1.57" upper="1.57" effort="1" velocity="1"/>
+  </joint>
+
+  <!-- gripper left 1 -->
+  <link name ="gripper_left_1">
+    <visual>
+      <geometry>
+        <mesh filename="package://my_manipulator_description/meshes/gripper_left_1.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="gripper_left_joint_1" type="revolute">
+    <parent link="gripper_base"/>
+    <child link="gripper_left_1"/> 
+    <origin xyz="0.0051 0.0105 0.029" rpy="0 0 0"/>
+    <!-- 이동축 -->
+    <axis xyz="1 0 0"/>
+    <!-- 임시 limit -->
+    <limit lower="-1.57" upper="0" effort="1" velocity="0.02"/>
+  </joint>
+
+
+  <!-- gripper right 1 -->
+  <link name ="gripper_right_1">
+    <visual>
+      <geometry>
+        <mesh filename="package://my_manipulator_description/meshes/gripper_right_1.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="gripper_right_joint_1" type="revolute">
+    <parent link="gripper_base"/>
+    <child link="gripper_right_1"/> 
+    <origin xyz="0.0051 -0.0105 0.029" rpy="0 0 0"/>
+    <!-- 이동축 -->
+    <axis xyz="1 0 0"/>
+    <!-- 임시 limit -->
+    <limit lower="-1.57" upper="0" effort="1" velocity="0.02"/>
+    <!-- 왼쪽 그리퍼와 반대 방향으로 연동 -->
+    <mimic joint="gripper_left_joint_1" multiplier="-1" offset="0"/>
+  </joint>
+
+</robot>
