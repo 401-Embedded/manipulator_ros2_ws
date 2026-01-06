@@ -28,6 +28,7 @@ setup(
     entry_points={
         'console_scripts': [
             'sine_motion = my_manipulator_control.sine_motion_publisher:main',
+            'uart_controller = my_manipulator_control.uart_controller:main',
         ],
     },
 )

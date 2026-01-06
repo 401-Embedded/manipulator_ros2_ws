@@ -17,6 +17,15 @@ def generate_launch_description():
             package="joint_state_publisher_gui",
             executable="joint_state_publisher_gui",
             name="joint_state_publisher_gui",
+            parameters=[{
+                'zeros': {
+                    'joint1': 1.5708,  # 90도 (라디안)
+                    'joint2': 1.5708,  # 90도
+                    'joint3': 0.0,     # 0도
+                    'joint4': 3.1416,  # 180도
+                    'gripper_left_joint_1': 3.1416,  # 180도
+                }
+            }],
         ),
         Node(
             package="robot_state_publisher",

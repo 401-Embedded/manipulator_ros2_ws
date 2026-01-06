@@ -24,13 +24,13 @@
     <parent link="base_link"/>
     <child link="articulation1"/>
 
-    <origin xyz="0 0 0.045" rpy="0 0 0"/>
+    <origin xyz="0 0 0.045" rpy="0 0 -1.57"/>
 
     <!-- 회전축 -->
     <axis xyz="0 0 1"/>
 
     <!-- 임시 limit -->
-    <limit lower="-1.57" upper="1.57" effort="1" velocity="1"/>
+    <limit lower="0" upper="3.14" effort="1" velocity="1"/>
   </joint>
 
   <!-- link1 -->
@@ -47,13 +47,13 @@
     <parent link="articulation1"/>
     <child link="link1"/>
 
-    <origin xyz="0 0.026 0.03" rpy="0 0 0"/>
+    <origin xyz="0 0.026 0.03" rpy="0 -1.57 0"/>
 
     <!-- 회전축 -->
     <axis xyz="0 1 0"/>
 
     <!-- 임시 limit -->
-    <limit lower="-1.57" upper="1.57" effort="1" velocity="1"/>
+    <limit lower="0" upper="3.14" effort="1" velocity="1"/>
   </joint>
 
   <!-- link2 -->
@@ -65,15 +65,15 @@
     </visual>
   </link>
 
-  <!-- joint2: link1 -> link2 -->
+  <!-- joint3: link1 -> link2 -->
   <joint name="joint3" type="revolute">
     <parent link="link1"/>
     <child link="link2"/> 
     <origin xyz="0 -0.046 0.2" rpy="0 0 0"/>
     <!-- 회전축 -->
-    <axis xyz="0 1 0"/>
+    <axis xyz="0 -1 0"/>
     <!-- 임시 limit -->
-    <limit lower="-1.57" upper="1.57" effort="1" velocity="1"/>
+    <limit lower="0" upper="3.14" effort="1" velocity="1"/>
   </joint>  
 
   <!-- gripper base -->
@@ -85,7 +85,7 @@
     </visual>
   </link>
 
-  <!-- joint3: link2 -> gripper base -->
+  <!-- joint4: link2 -> gripper base -->
   <joint name="joint4" type="revolute">
     <parent link="link2"/>
     <child link="gripper_base"/> 
@@ -93,7 +93,7 @@
     <!-- 회전축 -->
     <axis xyz="0 0 1"/>
     <!-- 임시 limit -->
-    <limit lower="-1.57" upper="1.57" effort="1" velocity="1"/>
+    <limit lower="0" upper="3.14" effort="1" velocity="1"/>
   </joint>
 
   <!-- gripper left 1 -->
@@ -108,11 +108,11 @@
   <joint name="gripper_left_joint_1" type="revolute">
     <parent link="gripper_base"/>
     <child link="gripper_left_1"/> 
-    <origin xyz="0.0051 0.0105 0.029" rpy="0 0 0"/>
+    <origin xyz="0.0051 0.0105 0.029" rpy="1.57 0 0"/>
     <!-- 이동축 -->
-    <axis xyz="1 0 0"/>
+    <axis xyz="-1 0 0"/>
     <!-- 임시 limit -->
-    <limit lower="-1.57" upper="0" effort="1" velocity="0.02"/>
+    <limit lower="1.57" upper="3.14" effort="1" velocity="0.02"/>
   </joint>
 
 
@@ -128,11 +128,11 @@
   <joint name="gripper_right_joint_1" type="revolute">
     <parent link="gripper_base"/>
     <child link="gripper_right_1"/> 
-    <origin xyz="0.0051 -0.0105 0.029" rpy="0 0 0"/>
+    <origin xyz="0.0051 -0.0105 0.029" rpy="-1.57 0 0"/>
     <!-- 이동축 -->
-    <axis xyz="1 0 0"/>
+    <axis xyz="-1 0 0"/>
     <!-- 임시 limit -->
-    <limit lower="-1.57" upper="0" effort="1" velocity="0.02"/>
+    <limit lower="1.57" upper="3.14" effort="1" velocity="0.02"/>
     <!-- 왼쪽 그리퍼와 반대 방향으로 연동 -->
     <mimic joint="gripper_left_joint_1" multiplier="-1" offset="0"/>
   </joint>

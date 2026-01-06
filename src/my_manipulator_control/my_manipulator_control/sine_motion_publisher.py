@@ -14,7 +14,7 @@ class SineMotionPublisher(Node):
         self.publisher_ = self.create_publisher(JointState, 'joint_states', 10)
         
         # 타이머 생성 (50Hz)
-        self.timer = self.create_timer(0.02, self.timer_callback)
+        self.timer = self.create_timer(0.05, self.timer_callback)
         
         # 시간 변수
         self.t = 0.0
@@ -35,13 +35,15 @@ class SineMotionPublisher(Node):
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.name = self.joint_names
         
-        # Sin 파형으로 각 joint 움직이기
+        # Sin 파형으로 각 joint 움직이기 (0~180도 범위)
+        # joint1~3: 90도를 중심으로 ±30도 움직임 (60~120도)
+        # joint4, gripper: 180도에서 시작, 줄었다가 180도로 복귀 (150~180도)
         msg.position = [
-            math.sin(self.t),                    # joint1: z축 회전
-            math.sin(self.t * 0.5) * 1.0,       # joint2: y축 회전
-            math.sin(self.t * 0.7) * 0.8,       # joint3: y축 회전
-            math.sin(self.t * 1.2) * 1.5,       # joint4: z축 회전
-            math.sin(self.t * 2.0) * 0.5        # gripper: 열고 닫기
+            1.5708 + math.sin(self.t) * 0.5236,                    # joint1: 90도±30도 (60~120도)
+            1.5708 + math.sin(self.t * 0.5) * 0.5236,             # joint2: 90도±30도 (60~120도)
+            0 + math.sin(self.t * 0.7) * 0.5236,                  # joint3: 0도±30도 (-30~30도)
+            3.1416 - abs(math.sin(self.t * 1.2)) * 0.5236,        # joint4: 180도에서 줄었다가 복귀 (150~180도)
+            3.1416 - abs(math.sin(self.t * 2.0)) * 0.5236         # gripper: 180도에서 줄었다가 복귀 (150~180도)
         ]
         
         self.publisher_.publish(msg)
