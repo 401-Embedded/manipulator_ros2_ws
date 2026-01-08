@@ -117,7 +117,7 @@
     <axis xyz="1 0 0"/>
     <!-- 임시 limit -->
     <limit effort="1" lower="-1.57" upper="0" velocity="0.02"/>
-    <!-- 왼쪽 그리퍼와 반대 방향으로 연동 .. -->
+    <!-- 왼쪽 그리퍼와 반대 방향으로 연동 -->
     <mimic joint="gripper_left_joint_1" multiplier="-1" offset="0"/>
   </joint>
 </robot>

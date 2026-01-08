@@ -45,10 +45,10 @@ class UARTController(Node):
             self.get_logger().warn('조인트 개수가 5개 미만입니다.')
             return
         
-        # 라디안을 도(degree)로 변환하고 정수로 변환
+        # 라디안을 도(degree)로 변환하고 소수 첫째자리까지 변환
         angles = []
         for pos in msg.position[:5]:  # 처음 5개 조인트만 사용
-            degree = int(math.degrees(pos))
+            degree = round(math.degrees(pos), 1)
             angles.append(degree)
         
         # UART 메시지 생성: "90 90 0 180 180\n"

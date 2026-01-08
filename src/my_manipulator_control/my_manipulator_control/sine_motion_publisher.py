@@ -41,9 +41,9 @@ class SineMotionPublisher(Node):
         msg.position = [
             1.5708 + math.sin(self.t) * 0.5236,                    # joint1: 90도±30도 (60~120도)
             1.5708 + math.sin(self.t * 0.5) * 0.5236,             # joint2: 90도±30도 (60~120도)
-            0 + math.sin(self.t * 0.7) * 0.5236,                  # joint3: 0도±30도 (-30~30도)
-            3.1416 - abs(math.sin(self.t * 1.2)) * 0.5236,        # joint4: 180도에서 줄었다가 복귀 (150~180도)
-            3.1416 - abs(math.sin(self.t * 2.0)) * 0.5236         # gripper: 180도에서 줄었다가 복귀 (150~180도)
+            0.5236 * (1 - math.cos(self.t * 0.7)),                # joint3: 0도에서 60도까지 (0~60도)
+            3.1416 - 0.5236 * (1 - math.cos(self.t * 1.2)),       # joint4: 180도에서 120도까지 (120~180도)
+            3.1416 - 0.5236 * (1 - math.cos(self.t * 2.0))        # gripper: 180도에서 120도까지 (120~180도)
         ]
         
         self.publisher_.publish(msg)
